@@ -59,13 +59,12 @@ p {
   line-height: 1.7em;
 }
 
-/* 勤怠トップ */
+/* 勤怠ヘッダー */
 .tg  {border-collapse:collapse;border-spacing:0;}
 .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg .tg-c3ow{border-color:#c0c0c0;text-align:center;vertical-align:top}
 .tg .tg-uys7{border-color:#c0c0c0;text-align:center}
-
 
 /* 勤怠表 */
 .tg  {border-collapse:collapse;border-spacing:0;}
@@ -74,3 +73,19 @@ p {
 .tg .tg-c0l1{border-color:#c0c0c0;text-align:center;vertical-align:bottom}
 .tg .tg-dorl{background-color:#efefef;border-color:#c0c0c0;text-align:center;vertical-align:bottom}
 .tg .tg-tjwp{background-color:#efefef;border-color:#c0c0c0;text-align:center;vertical-align:top}
+
+/* 勤怠編集 */
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:5px 4px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:5px 4px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-c0l1{border-color:#c0c0c0;text-align:center;vertical-align:bottom}
+.tg .tg-dorl{background-color:#efefef;border-color:#c0c0c0;text-align:center;vertical-align:bottom}
+.tg .tg-tjwp{background-color:#efefef;border-color:#c0c0c0;text-align:center;vertical-align:top}
+
+/* テーブル列の背景色を交互に変更 */
+.t-line tr:nth-child(odd) td {  
+  background-color: #EFEFEF;  
+}
+.t-line tr:nth-child(even) td {  
+  background-color: #FFF;  
+}  
