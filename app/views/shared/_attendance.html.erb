@@ -25,7 +25,6 @@
 
 <%= link_to "勤怠を編集", 'edit' %>
 
-<br><br>
 <table class="tg t-line" style="undefined;table-layout: fixed; width: 1137px">
   <colgroup>
     <col style="width: 83px">
@@ -60,24 +59,33 @@
     <th class="tg-c0l1"></th>
   </tr>
   
-  <% (@first_day..@end_day).each do |d| %>
+  <% (@first_day..@end_day).each.with_index(1) do |d, i| %>
   <% youbi = %w[日 月 火 水 木 金 土][d.wday] %>
-
+  <% d_str = d.strftime("%Y-%m-%d").to_date %>
   <tr>
-    <td class="tg-dorl"><%= d.month %>/<%= d.day%></td>
-    <td class="tg-dorl"><%= youbi %></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
+    <td class="tg-dorl"><%= d.strftime("%-m/%-d") %></td>
+    <td class="tg-dorl"><%= youbi %><%= i %></td>
+    <td class="tg-dorl"><% @works.each {|w| %><%= w.attendance_time.hour if w.attendance_time && d_str == w.day %><%}%></td>
+    <td class="tg-dorl"><% @works.each {|w| %><%= w.attendance_time.min if w.attendance_time && d_str == w.day %><%}%></td>
+    <td class="tg-dorl">
+      <% if @work_today.nil? && Date.current.day == d.day %>
+        <%= button_to "出勤", {action: 'create'}, {class: "btn btn-default"} %>
+      <% elsif !@work_today.nil? && @work_today.leaving_time.nil? && Date.current.day == d.day %>
+        <%= button_to "退勤", {action: 'create'}, {class: "btn btn-default"} %>
+      <% elsif !@work_today.nil? && Date.current.day == d.day %>
+        <%= link_to "勤務時間を編集", 'edit' %>
+      <% end %>
+    </td>
+    <td class="tg-dorl"><% @works.each {|w| %><%= w.leaving_time.hour if w.leaving_time && d_str == w.day %><%}%></td>
+    <td class="tg-dorl"><% @works.each {|w| %><%= w.leaving_time.min if w.leaving_time && d_str == w.day %><%}%></td> 
+    <td class="tg-dorl"><% @works.each {|w| %><%= w.remarks if w.remarks && d_str == w.day %><%}%></td>
     <td class="tg-dorl"></td>
     <td class="tg-dorl"></td>
     <td class="tg-dorl"></td>
     <td class="tg-dorl"></td>
   </tr>
   <% end %>
+  
   <tr>
     <td class="tg-tjwp" colspan="2"></td>
     <td class="tg-tjwp" colspan="6"></td>
