@@ -78,9 +78,9 @@
     </td>
     <td class="tg-dorl"><% @works.each {|w| %><%= w.leaving_time.hour if w.leaving_time && d_str == w.day %><%}%></td>
     <td class="tg-dorl"><% @works.each {|w| %><%= w.leaving_time.min if w.leaving_time && d_str == w.day %><%}%></td> 
+    <td class="tg-dorl"></td>
+    <td class="tg-dorl"></td>
     <td class="tg-dorl"><% @works.each {|w| %><%= w.remarks if w.remarks && d_str == w.day %><%}%></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
     <td class="tg-dorl"></td>
     <td class="tg-dorl"></td>
   </tr>

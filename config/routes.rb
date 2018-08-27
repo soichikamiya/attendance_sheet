@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root   'static_pages#home'
-  post "/create" => "static_pages#create"  
+  post   '/create',  to: 'static_pages#create'
+  post   '/update/:work_id',  to: 'static_pages#update'
+  post   '/update',  to: 'static_pages#update'
   get    '/edit',    to: 'static_pages#edit'
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'

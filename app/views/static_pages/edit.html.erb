@@ -20,21 +20,35 @@
     <th class="tg-c0l1">残業指示</th>
     <th class="tg-c0l1">指示者</th>
   </tr>
-  
+
   <% (@first_day..@end_day).each do |d| %>
   <% youbi = %w[日 月 火 水 木 金 土][d.wday] %>
-
+  <% d_str = d.strftime("%Y-%m-%d").to_date %>
+  <% work_id = Work.where(day:"#{d.year}-#{d.strftime("%m")}-#{d.strftime("%d")}").ids[0] %>
+  <%= form_tag("/update/#{work_id}") do %>
   <tr>
     <td class="tg-dorl"><%= d.month %>/<%= d.day%></td>
     <td class="tg-dorl"><%= youbi %></td>
+    <td class="tg-dorl"><input type="time" name="attendance_time" 
+      value=<% @works.each {|w| %><% if w.attendance_time && d_str == w.day %>
+      <%= w.attendance_time.strftime("%H") %>:<%= w.attendance_time.strftime("%M") %><%end%><%}%>>
+    </td>
+    <td class="tg-dorl"><input type="time" name="leaving_time" 
+      value=<% @works.each {|w| %><% if w.leaving_time && d_str == w.day %>
+      <%= w.leaving_time.strftime("%H") %>:<%= w.leaving_time.strftime("%M") %><%end%><%}%>>
+    </td>
     <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-    <td class="tg-dorl"></td>
-  </tr>
+    <td class="tg-dorl"><input type="text_area" name="remarks"
+      value=<% @works.each {|w| %><%= w.remarks if w.remarks && d_str == w.day %><%}%>>
+    </td>
+    <td class="tg-dorl"><input type="hidden" name="day"
+      value= "<%= d.year %>-<%= d.strftime("%m") %>-<%= d.strftime("%d") %>">
+    </td>
+    <td class="tg-dorl"><button class="submit" type="submit">編集</button></td>
+  </tr><tr></tr>
   <% end %>
+  <% end %>
+  <tr></tr>
   <tr>
     <td class="tg-tjwp" colspan="2">0.00</td>
     <td class="tg-tjwp"></td>

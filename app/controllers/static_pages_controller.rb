@@ -18,6 +18,7 @@ class StaticPagesController < ApplicationController
     @first_day = Date.new(today.year, today.month)
     @end_day = Date.new(today.year, today.month, -1)
     @work = Work.new
+    @works = Work.all
   end
   
   def create
@@ -38,6 +39,31 @@ class StaticPagesController < ApplicationController
       redirect_to root_path
     else
       render root_path
+    end
+  end
+
+  def update
+    if params[:work_id].nil?
+      @work = Work.new(
+        attendance_time: params[:attendance_time],
+        leaving_time: params[:leaving_time],
+        remarks: params[:remarks],
+        day: params[:day]
+      )
+    else
+      @work = Work.find(params[:work_id])
+      @work.update_attributes(
+        :attendance_time => params[:attendance_time],
+        :leaving_time => params[:leaving_time],
+        :remarks => params[:remarks]
+      )
+    end
+
+    if @work.save
+      flash[:notice] = "勤怠情報を編集しました"
+      redirect_to root_path
+    else
+      render("static_pages/edit")
     end
   end
 

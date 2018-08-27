@@ -44,7 +44,13 @@ GEM
     autoprefixer-rails (7.1.6)
       execjs
     bcrypt (3.1.11)
+    better_errors (2.4.0)
+      coderay (>= 1.0.0)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
     bindex (0.5.0)
+    binding_of_caller (0.8.0)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -66,6 +72,8 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
+    debug_inspector (0.0.3)
+    diff-lcs (1.3)
     erubi (1.7.0)
     excon (0.59.0)
     execjs (2.7.0)
@@ -312,6 +320,23 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.5)
       trollop (~> 2.1)
+    rspec-core (3.8.0)
+      rspec-support (~> 3.8.0)
+    rspec-expectations (3.8.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-mocks (3.8.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-rails (3.8.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.8.0)
+      rspec-expectations (~> 3.8.0)
+      rspec-mocks (~> 3.8.0)
+      rspec-support (~> 3.8.0)
+    rspec-support (3.8.0)
     ruby-progressbar (1.9.0)
     sass (3.5.3)
       sass-listen (~> 4.0.0)
@@ -365,6 +390,8 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (= 3.1.11)
+  better_errors
+  binding_of_caller
   bootstrap-sass (= 3.3.7)
   bootstrap-will_paginate (= 1.0.0)
   byebug (= 9.0.6)
@@ -383,6 +410,7 @@ DEPENDENCIES
   puma (= 3.9.1)
   rails (= 5.1.2)
   rails-controller-testing (= 1.0.2)
+  rspec-rails
   sass-rails (= 5.0.6)
   spring (= 2.0.2)
   spring-watcher-listen (= 2.0.1)
@@ -394,4 +422,4 @@ DEPENDENCIES
   will_paginate (= 3.1.5)
 
 BUNDLED WITH
-   1.16.0
+   1.16.3
