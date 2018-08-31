@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = "#{@user.name}さん、勤怠システムを活用しましょう！"
+      flash[:success] = "ようこそ #{@user.name}さん。勤怠システムを活用しましょう！"
       redirect_to @user
     else
       render 'new'
@@ -78,5 +78,6 @@ class UsersController < ApplicationController
     # 管理者かどうかを確認
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+      flash[:notice] = "他ユーザー編集の権限がありません"
     end
 end

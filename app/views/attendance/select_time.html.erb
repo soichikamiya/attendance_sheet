@@ -1,0 +1,36 @@
+<h1>基本情報の更新</h1>
+<div class="main">
+  <%= form_tag("/select") do %>
+    <p style="font-weight: bold;">指定勤務時間</p>
+      <input type="time" name="attendance_time_edit" class="select_input" value= ':'>
+    <br><br>
+    <p style="font-weight: bold;">基本勤務時間</p>
+      <input type="time" name="leaving_time_edit" class="select_input" value= ':'>
+      <input type="hidden" name="user_id" value= <%=@current_user.id%>><br><br>
+    <button class="submit" type="submit">編集</button>
+  <% end %>
+</div>
+
+
+<style>
+.main {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.select_input {
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
+.submit {
+  margin: 0 auto;
+  display: block;
+  width: 300px; 
+  height: 40px; 
+  background-color: #007bbb; 
+  color: white; 
+  border-radius: 10px;
+}
+
+</style>

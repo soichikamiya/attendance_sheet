@@ -6,8 +6,8 @@
     <col style="width: 141px">
     <col style="width: 141px">
     <col style="width: 106px">
-    <col style="width: 191px">
-    <col style="width: 191px">
+    <col style="width: 261px">
+    <col style="width: 121px">
     <col style="width: 201px">
   </colgroup>
   <tr>
@@ -22,27 +22,27 @@
   </tr>
 
   <% (@first_day..@end_day).each do |d| %>
-  <% youbi = %w[日 月 火 水 木 金 土][d.wday] %>
   <% d_str = d.strftime("%Y-%m-%d").to_date %>
-  <% work_id = Work.where(day:"#{d.year}-#{d.strftime("%m")}-#{d.strftime("%d")}").ids[0] %>
-  <%= form_tag("/update/#{work_id}") do %>
+  <% @work_id = @user.works.where(day:"#{d.year}-#{d.strftime("%m")}-#{d.strftime("%d")}").ids[0] %>
+  <%= form_tag("/update/#{@work_id}") do %>
   <tr>
     <td class="tg-dorl"><%= d.month %>/<%= d.day%></td>
-    <td class="tg-dorl"><%= youbi %></td>
+    <td class="tg-dorl"><%= @youbi[d.wday] %></td>
     <td class="tg-dorl"><input type="time" name="attendance_time" 
-      value=<% @works.each {|w| %><% if w.attendance_time && d_str == w.day %>
+      value=<% @user.works.each {|w| %><% if w.attendance_time && d_str == w.day %>
       <%= w.attendance_time.strftime("%H") %>:<%= w.attendance_time.strftime("%M") %><%end%><%}%>>
     </td>
     <td class="tg-dorl"><input type="time" name="leaving_time" 
-      value=<% @works.each {|w| %><% if w.leaving_time && d_str == w.day %>
+      value=<% @user.works.each {|w| %><% if w.leaving_time && d_str == w.day %>
       <%= w.leaving_time.strftime("%H") %>:<%= w.leaving_time.strftime("%M") %><%end%><%}%>>
     </td>
     <td class="tg-dorl"></td>
     <td class="tg-dorl"><input type="text_area" name="remarks"
-      value=<% @works.each {|w| %><%= w.remarks if w.remarks && d_str == w.day %><%}%>>
+      value=<% @user.works.each {|w| %><%= w.remarks if w.remarks && d_str == w.day %><%}%>>
     </td>
-    <td class="tg-dorl"><input type="hidden" name="day"
-      value= "<%= d.year %>-<%= d.strftime("%m") %>-<%= d.strftime("%d") %>">
+    <td class="tg-dorl">
+      <input type="hidden" name="day" value= "<%= d.year %>-<%= d.strftime("%m") %>-<%= d.strftime("%d") %>">
+      <input type="hidden" name="user_id" value= <%=@user.id%>>
     </td>
     <td class="tg-dorl"><button class="submit" type="submit">編集</button></td>
   </tr><tr></tr>
@@ -50,10 +50,10 @@
   <% end %>
   <tr></tr>
   <tr>
-    <td class="tg-tjwp" colspan="2">0.00</td>
+    <td class="tg-tjwp" colspan="2"></td>
     <td class="tg-tjwp"></td>
     <td class="tg-tjwp"></td>
-    <td class="tg-tjwp">0.00</td>
+    <td class="tg-tjwp"></td>
     <td class="tg-tjwp"></td>
     <td class="tg-tjwp"></td>
     <td class="tg-tjwp">所属長承認</td>
