@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post   '/update/',  to: 'attendance#update'
   get    '/attendance/select_time',  to: 'attendance#select_time'
   get    '/attendance/edit/:id',    to: 'attendance#edit'
+  get    '/attendance/attendance/:id/:first_day', to: 'attendance#attendance'
   get    '/attendance/attendance/:id', to: 'attendance#attendance'
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'

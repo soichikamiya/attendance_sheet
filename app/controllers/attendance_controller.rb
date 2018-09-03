@@ -6,8 +6,16 @@ class AttendanceController < ApplicationController
   def attendance
     today = Date.today
     @user = User.find_by(id: params[:id])
-    @first_day = Date.new(today.year, today.month)
-    @end_day = Date.new(today.year, today.month, -1)
+    
+    if !params[:first_day].nil?
+      @first_day = Date.parse(params[:first_day])
+    else
+      @first_day = Date.new(today.year, today.month, 1)
+    end
+    @end_day = @first_day.end_of_month
+    
+    #@first_day = Date.new(today.year, today.month)
+    #@end_day = Date.new(today.year, today.month, -1)
     @work = Work.new
     @works = Work.all
     @work_today = Work.where("day IN (?) AND user_id IN (?)", Date.current, @user.id).first
@@ -20,6 +28,7 @@ class AttendanceController < ApplicationController
     
     (@first_day..@end_day).each { |d| @youbi_sum << [d.wday] }
     @work_youbi = @youbi_sum.flatten.count { |a| a != 0 && a != 6 }
+    
   end
   
   def edit
@@ -106,20 +115,16 @@ class AttendanceController < ApplicationController
   
   def next_month
     @user = User.find_by(id: params[:id])
-    today = Date.today
-    next_m = today.next_month(1) 
-    @first_day = Date.new(next_m.year, next_m.month)
-    @end_day = Date.new(next_m.year, next_m.month, -1)
-    redirect_to ("/attendance/edit/#{@user.id}")
+    @first = Date.parse(params[:first_day])
+    @first_day = @first.next_month(1)
+    redirect_to ("/attendance/attendance/#{@user.id}/#{@first_day}")
   end
 
   def last_month
     @user = User.find_by(id: params[:id])
-    today = Date.today
-    prev = today.prev_month(1) 
-    @first_day = Date.new(prev.year, prev.month)
-    @end_day = Date.new(prev.year, prev.month, -1)
-    redirect_to ("/attendance/edit/#{@user.id}")
+    @first = Date.parse(params[:first_day])
+    @first_day = @first.prev_month(1)
+    redirect_to ("/attendance/attendance/#{@user.id}/#{@first_day}")
   end
   
   def set_user

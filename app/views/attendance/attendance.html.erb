@@ -7,9 +7,9 @@
     <col style="width: 120px">
   </colgroup>
   <tr>
-    <th class="tg-c3ow"><%= button_to "←", { :action => "last_month", :id => @user.id }, class:"button b-1" %>
+    <th class="tg-c3ow"><%= button_to "←", { :action => "last_month", :id => @user.id, :first_day => @first_day}, class:"button b-1" %>
       <%= @first_day.year %>年<%= @first_day.month %>月　時間管理表
-      <%= button_to "→", { :action => "next_month", :id => @user.id }, class:"button b-2" %>
+      <%= button_to "→", { :action => "next_month", :id => @user.id, :first_day => @first_day}, class:"button b-2" %>
     </th>
     <th class="tg-c3ow">指定勤務時間　<%= @a_edit.strftime("%-H:%-M") %></th>
     <th class="tg-c3ow" colspan="2"><%= @l_edit.strftime("%-H:%-M") %>　基本時間　</th>
@@ -70,12 +70,12 @@
     <td class="tg-dorl"><% @user.works.each {|w| %><%= w.attendance_time.hour if w.attendance_time && d_str == w.day %><%}%></td>
     <td class="tg-dorl"><% @user.works.each {|w| %><%= w.attendance_time.min if w.attendance_time && d_str == w.day %><%}%></td>
     <td class="tg-dorl">
-      <% if @work_today.nil? && @work_today.attendance_time.blank? && Date.current.day == d.day || 
-      @work_today.attendance_time.blank? && @work_today.leaving_time.blank? && Date.current.day == d.day %>
+      <% if @work_today.nil? && @work_today.attendance_time.blank? && Date.current == d || 
+      @work_today.attendance_time.blank? && @work_today.leaving_time.blank? && Date.current == d %>
         <%= button_to "出勤", {action: 'create', user_id: @user.id}, {class: "btn btn-default"} %>
-      <% elsif !@work_today.nil? && @work_today.leaving_time.blank? && Date.current.day == d.day %>
+      <% elsif !@work_today.nil? && @work_today.leaving_time.blank? && Date.current == d %>
         <%= button_to "退勤", {action: 'create', user_id: @user.id}, {class: "btn btn-default"} %>
-      <% elsif !@user.works.empty? && Date.current.day == d.day %>
+      <% elsif !@user.works.empty? && Date.current == d %>
         <%= link_to "勤怠を編集", "/attendance/edit/#{@user.id}" %>
       <% end %>
     </td>
