@@ -29,6 +29,13 @@ class AttendanceController < ApplicationController
     (@first_day..@end_day).each { |d| @youbi_sum << [d.wday] }
     @work_youbi = @youbi_sum.flatten.count { |a| a != 0 && a != 6 }
     
+    (@first_day..@end_day).each do |date|
+      # 該当日付のデータがないなら作成する
+      if !@user.works.any? {|work| work.day == date }
+        work = Work.create(user_id: @user.id, day: date)
+        work.save
+      end
+    end
   end
   
   def edit

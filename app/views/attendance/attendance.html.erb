@@ -19,7 +19,7 @@
     <td class="tg-c3ow">所属</td>
     <td class="tg-c3ow">氏名　<%= @user.name %></td>
     <td class="tg-uys7">　コード　</td>
-    <td class="tg-uys7">出勤日数　<%= @user.works.where("day like?", "%#{@first_day.month}%").count %>日</td>
+    <td class="tg-uys7">出勤日数　<%= @work_youbi %>日</td>
     <td class="tg-uys7">締め　<%= @end_day.strftime("%-m/%-d") %></td>
   </tr>
 </table>
@@ -70,8 +70,8 @@
     <td class="tg-dorl"><% @user.works.each {|w| %><%= w.attendance_time.hour if w.attendance_time && d_str == w.day %><%}%></td>
     <td class="tg-dorl"><% @user.works.each {|w| %><%= w.attendance_time.min if w.attendance_time && d_str == w.day %><%}%></td>
     <td class="tg-dorl">
-      <% if @work_today.nil? && @work_today.attendance_time.blank? && Date.current == d || 
-      @work_today.attendance_time.blank? && @work_today.leaving_time.blank? && Date.current == d %>
+      <% if @work_today.nil? && @work_today.attendance_time.nil? && Date.current == d || 
+      @work_today.attendance_time.nil? && @work_today.leaving_time.nil? && Date.current == d %>
         <%= button_to "出勤", {action: 'create', user_id: @user.id}, {class: "btn btn-default"} %>
       <% elsif !@work_today.nil? && @work_today.leaving_time.blank? && Date.current == d %>
         <%= button_to "退勤", {action: 'create', user_id: @user.id}, {class: "btn btn-default"} %>
@@ -84,7 +84,7 @@
     <td class="tg-dorl"></td>
     <td class="tg-dorl">
       <% @user.works.each {|w| %><% @w_time=(w.leaving_time - w.attendance_time) / (60 * 60) if w.leaving_time && w.attendance_time && d_str == w.day %>
-      <%= @w_time.round(2) if @w_time && d_str == w.day %><%}%>
+      <%= @w_time.round(2) if w.leaving_time && w.attendance_time && d_str == w.day %><%}%>
     </td>
     <td class="tg-dorl" style="word-wrap:break-word;">
       <% @user.works.each {|w| %><%= w.remarks if w.remarks && d_str == w.day %><%}%></td>
